@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "MyCodingActor.generated.h"
+//
+//class UStaticMeshComponent;  // 전방선언 Forward Declaration
 
 UCLASS()
 class MYSHOOTINGCPP_API AMyCodingActor : public AActor
@@ -15,16 +18,19 @@ public:
 	// Sets default values for this actor's properties
 	AMyCodingActor();
 
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
+protected:
 	// Edit / Visible
 	// DefaultOnly / InstanceOnly / Anywhere
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = MyVar)
 	int number = 10;
+
+public:
 	UPROPERTY(EditAnywhere, Category = MyVar)
 	float pi = 3.141592f;
 	UPROPERTY(EditAnywhere, Category = MyVar)
@@ -43,4 +49,8 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	int PlusPure(int a, int b);
+
+
+	UPROPERTY()
+	class UStaticMeshComponent* meshComp;
 };
