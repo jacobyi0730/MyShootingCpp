@@ -32,6 +32,7 @@ void AMyCodingActor::BeginPlay()
 	{
 		a.Add(i+1);
 	}
+	a.RemoveAt(2);
 	UE_LOG(LogTemp, Warning, TEXT("%d"), a[0]);
 
 	// sudo코드(의사코드)
