@@ -36,4 +36,14 @@ public:
 
 	float speed = 500;
 
+	// 화살표시(FirePosition)
+	UPROPERTY(EditAnywhere)
+	class UArrowComponent* firePosition;
+	// BP_Bullet을 담을 포인터변수
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class ABulletActor> bulletFactory;
+
+	void OnActionFire(); //선언
+
 };
+

@@ -2,6 +2,8 @@
 
 
 #include "PlayerPawn.h"
+#include <Components/ArrowComponent.h>
+#include "BulletActor.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -10,6 +12,13 @@ APlayerPawn::APlayerPawn()
 	PrimaryActorTick.bCanEverTick = true;
 
 	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("meshComp"));
+
+	SetRootComponent(meshComp);
+
+	firePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("firePosition"));
+	firePosition->SetRelativeLocation(FVector(0, 0, 100));
+	firePosition->SetRelativeRotation(FRotator(90, 0, 0));
+	firePosition->SetupAttachment(meshComp);
 
 }
 
@@ -37,6 +46,7 @@ void APlayerPawn::Tick(float DeltaTime)
 
 	SetActorLocation(p0 + velocity * t);
 
+
 }
 
 // Called to bind functionality to input
@@ -48,6 +58,9 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &APlayerPawn::OnAxisVertical);
 
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &APlayerPawn::OnActionFire);
+
+
 }
 
 void APlayerPawn::OnAxisHorizontal(float value)
@@ -58,5 +71,11 @@ void APlayerPawn::OnAxisHorizontal(float value)
 void APlayerPawn::OnAxisVertical(float value)
 {
 	v = value;
+}
+
+// 정의 / 구현
+void APlayerPawn::OnActionFire()
+{
+	GetWorld()->SpawnActor<ABulletActor>(bulletFactory, firePosition->GetComponentTransform());
 }
 
