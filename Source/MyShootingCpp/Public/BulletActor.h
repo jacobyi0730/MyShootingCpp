@@ -25,9 +25,17 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
 	// UStaticMeshComponent 의 meshComp
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
+	
+	UPROPERTY(EditAnywhere)
+	class UBoxComponent* boxComp;
+
+
+
 	// 위로 이동하고싶다.
 	UPROPERTY(EditAnywhere)
 	float speed = 1000;

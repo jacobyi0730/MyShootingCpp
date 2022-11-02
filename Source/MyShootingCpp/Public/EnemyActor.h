@@ -23,6 +23,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+
+
 	// 몸을만들고싶다.
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;

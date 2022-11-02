@@ -31,6 +31,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UStaticMeshComponent* meshComp;
 
+	UPROPERTY(EditAnywhere)
+	class UBoxComponent* boxComp;
 
 	// 화살표시(FirePosition)
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

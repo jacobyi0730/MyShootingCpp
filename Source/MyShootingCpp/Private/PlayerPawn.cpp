@@ -6,6 +6,7 @@
 #include "BulletActor.h"
 #include "PlayerMoveComponent.h"
 #include "PlayerFireComponent.h"
+#include <Components/BoxComponent.h>
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -13,9 +14,15 @@ APlayerPawn::APlayerPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("meshComp"));
+	boxComp = CreateDefaultSubobject<UBoxComponent>(TEXT("boxComp"));
+	// boxComp를 Root로 하고싶다.
+	RootComponent = boxComp;
 
-	SetRootComponent(meshComp);
+	boxComp->SetGenerateOverlapEvents(true);
+	boxComp->SetCollisionProfileName(TEXT("Player"));
+
+	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("meshComp"));
+	meshComp->SetupAttachment(RootComponent);
 
 	firePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("firePosition"));
 	firePosition->SetRelativeLocation(FVector(0, 0, 100));
