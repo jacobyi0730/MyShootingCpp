@@ -4,6 +4,8 @@
 #include "PlayerPawn.h"
 #include <Components/ArrowComponent.h>
 #include "BulletActor.h"
+#include "PlayerMoveComponent.h"
+#include "PlayerFireComponent.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -19,6 +21,10 @@ APlayerPawn::APlayerPawn()
 	firePosition->SetRelativeLocation(FVector(0, 0, 100));
 	firePosition->SetRelativeRotation(FRotator(90, 0, 0));
 	firePosition->SetupAttachment(meshComp);
+
+	moveComp = CreateDefaultSubobject<UPlayerMoveComponent>(TEXT("moveComp"));
+
+	fireComp = CreateDefaultSubobject<UPlayerFireComponent>(TEXT("fireComp"));
 
 }
 
@@ -36,15 +42,15 @@ void APlayerPawn::Tick(float DeltaTime)
 
 	// 사용자의 입력(축)으로 방향을 만들고
 	
-	FVector direction = GetActorRightVector() * h + GetActorUpVector() * v;
-	direction.Normalize();
-	// P = P0 + vt
-	// 그 방향으로 이동하고싶다.
-	FVector p0 = GetActorLocation();
-	FVector velocity = direction * speed;
-	float t = DeltaTime;
+	//FVector direction = GetActorRightVector() * h + GetActorUpVector() * v;
+	//direction.Normalize();
+	//// P = P0 + vt
+	//// 그 방향으로 이동하고싶다.
+	//FVector p0 = GetActorLocation();
+	//FVector velocity = direction * speed;
+	//float t = DeltaTime;
 
-	SetActorLocation(p0 + velocity * t);
+	//SetActorLocation(p0 + velocity * t);
 
 
 }
@@ -54,28 +60,9 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	PlayerInputComponent->BindAxis(TEXT("Horizontal"), this, &APlayerPawn::OnAxisHorizontal);
-
-	PlayerInputComponent->BindAxis(TEXT("Vertical"), this, &APlayerPawn::OnAxisVertical);
-
-	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &APlayerPawn::OnActionFire);
-
+	moveComp->SetupInput(PlayerInputComponent);
+	fireComp->SetupInput(PlayerInputComponent);
 
 }
 
-void APlayerPawn::OnAxisHorizontal(float value)
-{
-	h = value;
-}
-
-void APlayerPawn::OnAxisVertical(float value)
-{
-	v = value;
-}
-
-// 정의 / 구현
-void APlayerPawn::OnActionFire()
-{
-	GetWorld()->SpawnActor<ABulletActor>(bulletFactory, firePosition->GetComponentTransform());
-}
 
