@@ -19,6 +19,11 @@ AEnemyActor::AEnemyActor()
 	boxComp->SetGenerateOverlapEvents(true);
 	boxComp->SetCollisionProfileName(TEXT("Enemy"));
 
+	boxComp->SetBoxExtent(FVector(50, 50, 50));
+
+	boxComp->OnComponentBeginOverlap.AddDynamic(this, &AEnemyActor::OnBoxComponentBeginOverlap);
+
+
 	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("meshComp"));
 	meshComp->SetupAttachment(RootComponent);
 }
@@ -56,15 +61,33 @@ void AEnemyActor::Tick(float DeltaTime)
 void AEnemyActor::NotifyActorBeginOverlap(AActor* OtherActor)
 {
 	// ºÎµúÈù »ó´ë°¡ ÇÃ·¹ÀÌ¾î¶ó¸é
-	//if (OtherActor->IsA(APlayerPawn::StaticClass()))
-	auto player = Cast<APlayerPawn>(OtherActor);
-	if (player != nullptr)
+	////if (OtherActor->IsA(APlayerPawn::StaticClass()))
+	//auto player = Cast<APlayerPawn>(OtherActor);
+	//if (player != nullptr)
+	//{
+	//	// ³ÊÁ×°í 
+	//	OtherActor->Destroy();
+	//	// ³ªÁ×°í ÇÏ°í½Í´Ù.
+	//	this->Destroy();
+	//}
+
+}
+
+void AEnemyActor::OnBoxComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA(APlayerPawn::StaticClass()))
 	{
+		Explosion();
+
 		// ³ÊÁ×°í 
 		OtherActor->Destroy();
 		// ³ªÁ×°í ÇÏ°í½Í´Ù.
 		this->Destroy();
 	}
+}
 
+void AEnemyActor::Explosion()
+{
+	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionVFXFactory, GetActorLocation());
 }
 
