@@ -73,7 +73,13 @@ void AEnemyActor::NotifyActorBeginOverlap(AActor* OtherActor)
 
 }
 
-void AEnemyActor::OnBoxComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void AEnemyActor::OnBoxComponentBeginOverlap(
+	UPrimitiveComponent* OverlappedComponent,
+	AActor* OtherActor,
+	UPrimitiveComponent* OtherComp,
+	int32 OtherBodyIndex,
+	bool bFromSweep,
+	const FHitResult& SweepResult)
 {
 	if (OtherActor->IsA(APlayerPawn::StaticClass()))
 	{
