@@ -23,11 +23,14 @@ APlayerPawn::APlayerPawn()
 
 	meshComp = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("meshComp"));
 	meshComp->SetupAttachment(RootComponent);
+	meshComp->SetRelativeRotation(FRotator(0, 90, 90));
+	meshComp->SetRelativeScale3D(FVector(3.0f));
+
 
 	firePosition = CreateDefaultSubobject<UArrowComponent>(TEXT("firePosition"));
 	firePosition->SetRelativeLocation(FVector(0, 0, 100));
 	firePosition->SetRelativeRotation(FRotator(90, 0, 0));
-	firePosition->SetupAttachment(meshComp);
+	firePosition->SetupAttachment(RootComponent);
 
 	moveComp = CreateDefaultSubobject<UPlayerMoveComponent>(TEXT("moveComp"));
 

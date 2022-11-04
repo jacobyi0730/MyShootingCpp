@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "PlayerPawn.h"
+#include <Kismet/KismetMathLibrary.h>
 
 // Sets default values
 AEnemyActor::AEnemyActor()
@@ -46,6 +47,11 @@ void AEnemyActor::BeginPlay()
 		// 앞방향
 		direction = GetActorForwardVector();
 	}
+
+	// 이동방향으로 회전하고싶다.
+	FRotator rot = UKismetMathLibrary::MakeRotFromXZ(direction, GetActorUpVector());
+	
+	SetActorRotation(rot);
 
 }
 

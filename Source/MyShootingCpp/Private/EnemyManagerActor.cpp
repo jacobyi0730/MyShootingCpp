@@ -4,11 +4,13 @@
 #include "EnemyManagerActor.h"
 #include <Components/ArrowComponent.h>
 #include "EnemyActor.h"
+#include <Kismet/GameplayStatics.h>
+#include "PlayerPawn.h"
 
 // Sets default values
 AEnemyManagerActor::AEnemyManagerActor()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	spawnArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("spawnArrow"));
 	spawnArrow->SetRelativeRotation(FRotator(-90, 0, 0));
@@ -18,7 +20,7 @@ AEnemyManagerActor::AEnemyManagerActor()
 void AEnemyManagerActor::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	FTimerHandle timerHandle;
 	GetWorldTimerManager().SetTimer(timerHandle, this, &AEnemyManagerActor::MakeEnemy, makeTime, true);
 }
@@ -43,6 +45,22 @@ void AEnemyManagerActor::Tick(float DeltaTime)
 
 void AEnemyManagerActor::MakeEnemy()
 {
-	GetWorld()->SpawnActor<AEnemyActor>(enemyFactory, spawnArrow->GetComponentTransform());
+	// 만약 플레이폰이 파괴되지 않았다면
+	// 만약 플레이폰이 nullptr이 아니라면
+	/*AActor* target = UGameplayStatics::GetActorOfClass(GetWorld(), APlayerPawn::StaticClass());
+	
+	TArray<AActor*> OutActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlayerPawn::StaticClass(), OutActors);
+
+	for each (AActor* var in OutActors)
+	{
+
+	}*/
+
+	auto target = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (target != nullptr)
+	{
+		GetWorld()->SpawnActor<AEnemyActor>(enemyFactory, spawnArrow->GetComponentTransform());
+	}
 }
 
