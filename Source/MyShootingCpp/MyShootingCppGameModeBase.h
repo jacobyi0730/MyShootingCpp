@@ -19,6 +19,8 @@ public:
 	int score = 0;
 	void AddScore(int value);
 
+	UPROPERTY(EditAnywhere)
 	TSubclassOf<class UScoreWidget> scoreWidgetFactory;
+
 	class UScoreWidget* scoreWidget;
 };

@@ -45,5 +45,16 @@ public:
 	UPROPERTY(EditAnywhere)
 	class UPlayerFireComponent* fireComp;
 
+	int hp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int maxHP = 5;
+
+	// Event함수, Callbaek함수
+	void OnMyHit(int damage);
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnMyUpdateHealth(int value);
+
 };
 

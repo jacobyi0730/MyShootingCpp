@@ -91,8 +91,9 @@ void AEnemyActor::OnBoxComponentBeginOverlap(
 	{
 		Explosion();
 
-		// 너죽고 
-		OtherActor->Destroy();
+		// 너 Hit하고
+		auto player = Cast<APlayerPawn>(OtherActor);
+		player->OnMyHit(1);
 		// 나죽고 하고싶다.
 		this->Destroy();
 	}

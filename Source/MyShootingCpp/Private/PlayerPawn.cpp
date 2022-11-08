@@ -42,7 +42,7 @@ APlayerPawn::APlayerPawn()
 void APlayerPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	hp = maxHP;
 }
 
 // Called every frame
@@ -75,4 +75,14 @@ void APlayerPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 }
 
+void APlayerPawn::OnMyHit(int damage)
+{
+	hp -= damage;
+	OnMyUpdateHealth(hp);
+	// 만약 hp가 0이하라면
+	if (hp <= 0){
+	// 파괴되고싶다.
+		this->Destroy();
+	}
+}
 

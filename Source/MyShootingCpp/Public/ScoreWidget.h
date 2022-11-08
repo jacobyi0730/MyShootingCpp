@@ -13,7 +13,7 @@ UCLASS()
 class MYSHOOTINGCPP_API UScoreWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
+public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* TextBlock_ScoreTitle;
 
