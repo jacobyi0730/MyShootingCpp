@@ -5,6 +5,7 @@
 #include <Components/StaticMeshComponent.h>
 #include <Components/BoxComponent.h>
 #include "EnemyActor.h"
+#include "../MyShootingCppGameModeBase.h"
 
 // Sets default values
 ABulletActor::ABulletActor()
@@ -64,6 +65,11 @@ void ABulletActor::OnBoxComponentBeginOverlap(UPrimitiveComponent* OverlappedCom
 		OtherActor->Destroy();
 		// 나죽고 하고싶다.
 		this->Destroy();
+		// 1점 증가시키고싶다.
+		//  = AddScore를 호출하고싶다.
+		auto gm = GetWorld()->GetAuthGameMode();
+		auto gameMode = Cast<AMyShootingCppGameModeBase>(gm);
+		gameMode->AddScore(1);
 	}
 }
 

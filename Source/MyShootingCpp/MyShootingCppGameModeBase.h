@@ -13,5 +13,12 @@ UCLASS()
 class MYSHOOTINGCPP_API AMyShootingCppGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void BeginPlay() override;
+
+	int score = 0;
+	void AddScore(int value);
+
+	TSubclassOf<class UScoreWidget> scoreWidgetFactory;
+	class UScoreWidget* scoreWidget;
 };
