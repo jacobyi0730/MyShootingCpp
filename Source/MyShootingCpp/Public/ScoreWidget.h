@@ -14,6 +14,9 @@ class MYSHOOTINGCPP_API UScoreWidget : public UUserWidget
 {
 	GENERATED_BODY()
 public:
+
+	virtual void NativeConstruct() override;
+
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UTextBlock* TextBlock_ScoreTitle;
 

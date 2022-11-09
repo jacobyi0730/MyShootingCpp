@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UButton* Button_Quit;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidgetAnim), Transient)
+	class UWidgetAnimation* NewAnimation;
+
 	UFUNCTION()
 	void OnMyRestart();
 	UFUNCTION()

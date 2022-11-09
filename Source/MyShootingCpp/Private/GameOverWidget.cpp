@@ -12,6 +12,9 @@ void UGameOverWidget::NativeConstruct()
 	Button_Restart->OnClicked.AddDynamic(this, &UGameOverWidget::OnMyRestart);
 
 	Button_Quit->OnClicked.AddDynamic(this, &UGameOverWidget::OnMyQuit);
+	
+	PlayAnimation(NewAnimation, 0, 100, EUMGSequencePlayMode::PingPong);
+	
 }
 
 void UGameOverWidget::OnMyRestart()

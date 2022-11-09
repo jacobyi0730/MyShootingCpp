@@ -3,3 +3,7 @@
 
 #include "ScoreWidget.h"
 
+void UScoreWidget::NativeConstruct()
+{
+	//Super::NativeConstruct();
+}
