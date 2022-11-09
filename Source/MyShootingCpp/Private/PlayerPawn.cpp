@@ -7,6 +7,7 @@
 #include "PlayerMoveComponent.h"
 #include "PlayerFireComponent.h"
 #include <Components/BoxComponent.h>
+#include "../MyShootingCppGameModeBase.h"
 
 // Sets default values
 APlayerPawn::APlayerPawn()
@@ -80,8 +81,13 @@ void APlayerPawn::OnMyHit(int damage)
 	hp -= damage;
 	OnMyUpdateHealth(hp);
 	// 만약 hp가 0이하라면
-	if (hp <= 0){
-	// 파괴되고싶다.
+	if (hp <= 0)
+	{
+		// GameMode를 가져온다.변신!!!
+		auto gameMode = Cast<AMyShootingCppGameModeBase>(GetWorld()->GetAuthGameMode());
+		// 그녀석의 함수를 호출한다.
+		gameMode->ShowGameOverUI();
+		// 파괴되고싶다.
 		this->Destroy();
 	}
 }

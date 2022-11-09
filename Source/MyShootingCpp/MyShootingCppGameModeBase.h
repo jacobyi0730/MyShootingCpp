@@ -23,4 +23,14 @@ public:
 	TSubclassOf<class UScoreWidget> scoreWidgetFactory;
 
 	class UScoreWidget* scoreWidget;
+
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class UGameOverWidget> gameOverWidgetFactory;
+
+	class UGameOverWidget* gameOverWidget;
+
+	void ShowGameOverUI();
+
+
 };
