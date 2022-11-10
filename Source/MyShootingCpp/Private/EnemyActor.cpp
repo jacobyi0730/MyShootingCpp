@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "PlayerPawn.h"
 #include <Kismet/KismetMathLibrary.h>
+#include "EnemyBulletActor.h"
 
 // Sets default values
 AEnemyActor::AEnemyActor()
@@ -53,6 +54,15 @@ void AEnemyActor::BeginPlay()
 	
 	SetActorRotation(rot);
 
+	// 총알(EnemyBullet)을 생성하고싶다.
+	// 랜덤으로 min, max
+	GetWorldTimerManager().SetTimer(
+		timerHandleMakeBullet, 
+		this,
+		&AEnemyActor::MakeEnemyBullet,
+		FMath::FRandRange(makeMin, makeMax),
+		false
+	);
 }
 
 // Called every frame
@@ -102,5 +112,21 @@ void AEnemyActor::OnBoxComponentBeginOverlap(
 void AEnemyActor::Explosion()
 {
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionVFXFactory, GetActorLocation());
+}
+
+void AEnemyActor::MakeEnemyBullet()
+{
+	// P0 + forward * 100
+	FVector loc = GetActorLocation() + GetActorForwardVector() * 100;
+	FRotator rot = GetActorRotation();
+	GetWorld()->SpawnActor<AEnemyBulletActor>(enemyBulletFactory, loc, rot);
+
+	GetWorldTimerManager().SetTimer(
+		timerHandleMakeBullet,
+		this,
+		&AEnemyActor::MakeEnemyBullet,
+		FMath::FRandRange(makeMin, makeMax),
+		false
+	);
 }
 

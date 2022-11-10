@@ -54,4 +54,14 @@ public:
 	class UParticleSystem* explosionVFXFactory;
 
 	void Explosion();
+
+	FTimerHandle timerHandleMakeBullet;
+	UPROPERTY(EditAnywhere)
+	float makeMin = 0.5f;
+	UPROPERTY(EditAnywhere)
+	float makeMax = 1.0f;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AEnemyBulletActor> enemyBulletFactory;
+
+	void MakeEnemyBullet();
 };
