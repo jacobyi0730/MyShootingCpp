@@ -32,6 +32,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EBossState state = EBossState::Idle;
 	
 	FVector origin;
@@ -44,4 +45,20 @@ public:
 
 	void TickMove();
 	void TickAttack();
+
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<class AEnemyBulletActor> enemyBulletFactory;
+
+	float currentTime;
+	float fireTime = 2;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bFireOneShot;	// true : 한번에 쏘는것 , false : 나선형
+	void MakeEnemyBullet(FVector origin, FRotator angle);
+
+	int shotIndex;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int shotMaxIndex = 12;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float shotFireTime = 0.05f;
 };
